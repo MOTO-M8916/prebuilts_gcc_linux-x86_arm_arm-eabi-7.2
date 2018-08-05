@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -205,6 +205,157 @@ by supplying an appropriate &lsquo;<samp>qSupported</samp>&rsquo; response (see 
 This should only be done on targets that actually support disabling
 address space randomization.
 </p>
+</dd>
+<dt>&lsquo;<samp>QStartupWithShell:<var>value</var></samp>&rsquo;</dt>
+<dd><a name="index-startup-with-shell_002c-remote-request"></a>
+<a name="index-QStartupWithShell-packet"></a>
+<p>On UNIX-like targets, it is possible to start the inferior using a
+shell program.  This is the default behavior on both <small>GDB</small> and
+<code>gdbserver</code> (see <a href="Starting.html#set-startup_002dwith_002dshell">set startup-with-shell</a>).  This packet is
+used to inform <code>gdbserver</code> whether it should start the
+inferior using a shell or not.
+</p>
+<p>If <var>value</var> is &lsquo;<samp>0</samp>&rsquo;, <code>gdbserver</code> will not use a shell
+to start the inferior.  If <var>value</var> is &lsquo;<samp>1</samp>&rsquo;,
+<code>gdbserver</code> will use a shell to start the inferior.  All other
+values are considered an error.
+</p>
+<p>This packet is only available in extended mode (see <a href="Packets.html#extended-mode">extended mode</a>).
+</p>
+<p>Reply:
+</p><dl compact="compact">
+<dt>&lsquo;<samp>OK</samp>&rsquo;</dt>
+<dd><p>The request succeeded.
+</p>
+</dd>
+<dt>&lsquo;<samp>E <var>nn</var></samp>&rsquo;</dt>
+<dd><p>An error occurred.  The error number <var>nn</var> is given as hex digits.
+</p></dd>
+</dl>
+
+<p>This packet is not probed by default; the remote stub must request it,
+by supplying an appropriate &lsquo;<samp>qSupported</samp>&rsquo; response
+(see <a href="#qSupported">qSupported</a>).  This should only be done on targets that
+actually support starting the inferior using a shell.
+</p>
+<p>Use of this packet is controlled by the <code>set startup-with-shell</code>
+command; see <a href="Starting.html#set-startup_002dwith_002dshell">set startup-with-shell</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>QEnvironmentHexEncoded:<var>hex-value</var></samp>&rsquo;</dt>
+<dd><a name="QEnvironmentHexEncoded"></a><a name="index-set-environment-variable_002c-remote-request"></a>
+<a name="index-QEnvironmentHexEncoded-packet"></a>
+<p>On UNIX-like targets, it is possible to set environment variables that
+will be passed to the inferior during the startup process.  This
+packet is used to inform <code>gdbserver</code> of an environment
+variable that has been defined by the user on <small>GDB</small> (see <a href="Environment.html#set-environment">set environment</a>).
+</p>
+<p>The packet is composed by <var>hex-value</var>, an hex encoded
+representation of the <var>name=value</var> format representing an
+environment variable.  The name of the environment variable is
+represented by <var>name</var>, and the value to be assigned to the
+environment variable is represented by <var>value</var>.  If the variable
+has no value (i.e., the value is <code>null</code>), then <var>value</var> will
+not be present.
+</p>
+<p>This packet is only available in extended mode (see <a href="Packets.html#extended-mode">extended mode</a>).
+</p>
+<p>Reply:
+</p><dl compact="compact">
+<dt>&lsquo;<samp>OK</samp>&rsquo;</dt>
+<dd><p>The request succeeded.
+</p></dd>
+</dl>
+
+<p>This packet is not probed by default; the remote stub must request it,
+by supplying an appropriate &lsquo;<samp>qSupported</samp>&rsquo; response
+(see <a href="#qSupported">qSupported</a>).  This should only be done on targets that
+actually support passing environment variables to the starting
+inferior.
+</p>
+<p>This packet is related to the <code>set environment</code> command;
+see <a href="Environment.html#set-environment">set environment</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>QEnvironmentUnset:<var>hex-value</var></samp>&rsquo;</dt>
+<dd><a name="QEnvironmentUnset"></a><a name="index-unset-environment-variable_002c-remote-request"></a>
+<a name="index-QEnvironmentUnset-packet"></a>
+<p>On UNIX-like targets, it is possible to unset environment variables
+before starting the inferior in the remote target.  This packet is
+used to inform <code>gdbserver</code> of an environment variable that has
+been unset by the user on <small>GDB</small> (see <a href="Environment.html#unset-environment">unset environment</a>).
+</p>
+<p>The packet is composed by <var>hex-value</var>, an hex encoded
+representation of the name of the environment variable to be unset.
+</p>
+<p>This packet is only available in extended mode (see <a href="Packets.html#extended-mode">extended mode</a>).
+</p>
+<p>Reply:
+</p><dl compact="compact">
+<dt>&lsquo;<samp>OK</samp>&rsquo;</dt>
+<dd><p>The request succeeded.
+</p></dd>
+</dl>
+
+<p>This packet is not probed by default; the remote stub must request it,
+by supplying an appropriate &lsquo;<samp>qSupported</samp>&rsquo; response
+(see <a href="#qSupported">qSupported</a>).  This should only be done on targets that
+actually support passing environment variables to the starting
+inferior.
+</p>
+<p>This packet is related to the <code>unset environment</code> command;
+see <a href="Environment.html#unset-environment">unset environment</a>.
+</p>
+</dd>
+<dt>&lsquo;<samp>QEnvironmentReset</samp>&rsquo;</dt>
+<dd><a name="QEnvironmentReset"></a><a name="index-reset-environment_002c-remote-request"></a>
+<a name="index-QEnvironmentReset-packet"></a>
+<p>On UNIX-like targets, this packet is used to reset the state of
+environment variables in the remote target before starting the
+inferior.  In this context, reset means unsetting all environment
+variables that were previously set by the user (i.e., were not
+initially present in the environment).  It is sent to
+<code>gdbserver</code> before the &lsquo;<samp>QEnvironmentHexEncoded</samp>&rsquo;
+(see <a href="#QEnvironmentHexEncoded">QEnvironmentHexEncoded</a>) and the &lsquo;<samp>QEnvironmentUnset</samp>&rsquo;
+(see <a href="#QEnvironmentUnset">QEnvironmentUnset</a>) packets.
+</p>
+<p>This packet is only available in extended mode (see <a href="Packets.html#extended-mode">extended mode</a>).
+</p>
+<p>Reply:
+</p><dl compact="compact">
+<dt>&lsquo;<samp>OK</samp>&rsquo;</dt>
+<dd><p>The request succeeded.
+</p></dd>
+</dl>
+
+<p>This packet is not probed by default; the remote stub must request it,
+by supplying an appropriate &lsquo;<samp>qSupported</samp>&rsquo; response
+(see <a href="#qSupported">qSupported</a>).  This should only be done on targets that
+actually support passing environment variables to the starting
+inferior.
+</p>
+</dd>
+<dt>&lsquo;<samp>QSetWorkingDir:<span class="roman">[</span><var>directory</var><span class="roman">]</span></samp>&rsquo;</dt>
+<dd><a name="QSetWorkingDir-packet"></a><a name="index-set-working-directory_002c-remote-request"></a>
+<a name="index-QSetWorkingDir-packet"></a>
+<p>This packet is used to inform the remote server of the intended
+current working directory for programs that are going to be executed.
+</p>
+<p>The packet is composed by <var>directory</var>, an hex encoded
+representation of the directory that the remote inferior will use as
+its current working directory.  If <var>directory</var> is an empty string,
+the remote server should reset the inferior&rsquo;s current working
+directory to its original, empty value.
+</p>
+<p>This packet is only available in extended mode (see <a href="Packets.html#extended-mode">extended mode</a>).
+</p>
+<p>Reply:
+</p><dl compact="compact">
+<dt>&lsquo;<samp>OK</samp>&rsquo;</dt>
+<dd><p>The request succeeded.
+</p></dd>
+</dl>
+
 </dd>
 <dt>&lsquo;<samp>qfThreadInfo</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>qsThreadInfo</samp>&rsquo;</dt>

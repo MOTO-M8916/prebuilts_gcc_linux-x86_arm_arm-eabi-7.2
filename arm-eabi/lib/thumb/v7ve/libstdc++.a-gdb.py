@@ -19,7 +19,7 @@ import gdb
 import os
 import os.path
 
-pythondir = '/home/tcwg-buildslave/workspace/tcwg-make-release/builder_arch/amd64/label/tcwg-x86_64-build/target/arm-eabi/_build/builds/destdir/x86_64-unknown-linux-gnu/share/gcc-7.2.1/python'
+pythondir = '/home/tcwg-buildslave/workspace/tcwg-make-release/builder_arch/amd64/label/tcwg-x86_64-build/target/arm-eabi/_build/builds/destdir/x86_64-unknown-linux-gnu/share/gcc-7.3.1/python'
 libdir = '/home/tcwg-buildslave/workspace/tcwg-make-release/builder_arch/amd64/label/tcwg-x86_64-build/target/arm-eabi/_build/builds/destdir/x86_64-unknown-linux-gnu/arm-eabi/lib/thumb/v7ve'
 
 # This file might be loaded when there is no current objfile.  This

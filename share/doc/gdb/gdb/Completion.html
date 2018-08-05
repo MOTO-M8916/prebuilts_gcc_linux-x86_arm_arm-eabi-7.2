@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -173,38 +173,56 @@ its notion of a word.  To permit word completion to work in this
 situation, you may enclose words in <code>'</code> (single quote marks) in
 <small>GDB</small> commands.
 </p>
-<p>The most likely situation where you might need this is in typing the
-name of a C<tt>++</tt> function.  This is because C<tt>++</tt> allows function
-overloading (multiple definitions of the same function, distinguished
-by argument type).  For example, when you want to set a breakpoint you
-may need to distinguish whether you mean the version of <code>name</code>
-that takes an <code>int</code> parameter, <code>name(int)</code>, or the version
-that takes a <code>float</code> parameter, <code>name(float)</code>.  To use the
-word-completion facilities in this situation, type a single quote
+<p>A likely situation where you might need this is in typing an
+expression that involves a C<tt>++</tt> symbol name with template
+parameters.  This is because when completing expressions, GDB treats
+the &lsquo;<samp>&lt;</samp>&rsquo; character as word delimiter, assuming that it&rsquo;s the
+less-than comparison operator (see <a href="C-Operators.html#C-Operators">C and C<tt>++</tt>
+Operators</a>).
+</p>
+<p>For example, when you want to call a C<tt>++</tt> template function
+interactively using the <code>print</code> or <code>call</code> commands, you may
+need to distinguish whether you mean the version of <code>name</code> that
+was specialized for <code>int</code>, <code>name&lt;int&gt;()</code>, or the version
+that was specialized for <code>float</code>, <code>name&lt;float&gt;()</code>.  To use
+the word-completion facilities in this situation, type a single quote
 <code>'</code> at the beginning of the function name.  This alerts
 <small>GDB</small> that it may need to consider more information than usual
 when you press <tt class="key">TAB</tt> or <kbd>M-?</kbd> to request word completion:
 </p>
 <div class="smallexample">
-<pre class="smallexample">(gdb) b 'bubble( <kbd>M-?</kbd>
-bubble(double,double)    bubble(int,int)
-(gdb) b 'bubble(
+<pre class="smallexample">(gdb) p 'func&lt; <kbd>M-?</kbd>
+func&lt;int&gt;()    func&lt;float&gt;()
+(gdb) p 'func&lt;
 </pre></div>
 
-<p>In some cases, <small>GDB</small> can tell that completing a name requires using
-quotes.  When this happens, <small>GDB</small> inserts the quote for you (while
-completing as much as it can) if you do not type the quote in the first
-place:
+<p>When setting breakpoints however (see <a href="Specify-Location.html#Specify-Location">Specify Location</a>), you don&rsquo;t
+usually need to type a quote before the function name, because
+<small>GDB</small> understands that you want to set a breakpoint on a
+function:
 </p>
 <div class="smallexample">
-<pre class="smallexample">(gdb) b bub <span class="key">TAB</span>
-</pre><pre class="smallexample">GDB alters your input line to the following, and rings a bell:
-</pre><pre class="smallexample">(gdb) b 'bubble(
+<pre class="smallexample">(gdb) b func&lt; <kbd>M-?</kbd>
+func&lt;int&gt;()    func&lt;float&gt;()
+(gdb) b func&lt;
 </pre></div>
 
-<p>In general, <small>GDB</small> can tell that a quote is needed (and inserts it) if
-you have not yet started typing the argument list when you ask for
-completion on an overloaded symbol.
+<p>This is true even in the case of typing the name of C<tt>++</tt> overloaded
+functions (multiple definitions of the same function, distinguished by
+argument type).  For example, when you want to set a breakpoint you
+don&rsquo;t need to distinguish whether you mean the version of <code>name</code>
+that takes an <code>int</code> parameter, <code>name(int)</code>, or the version
+that takes a <code>float</code> parameter, <code>name(float)</code>.
+</p>
+<div class="smallexample">
+<pre class="smallexample">(gdb) b bubble( <kbd>M-?</kbd>
+bubble(int)    bubble(double)
+(gdb) b bubble(dou <kbd>M-?</kbd>
+bubble(double)
+</pre></div>
+
+<p>See <a href="Symbols.html#quoting-names">quoting names</a> for a description of other scenarios that
+require quoting.
 </p>
 <p>For more information about overloaded functions, see <a href="C-Plus-Plus-Expressions.html#C-Plus-Plus-Expressions">C<tt>++</tt> Expressions</a>.  You can use the command <code>set
 overload-resolution off</code> to disable overload resolution;

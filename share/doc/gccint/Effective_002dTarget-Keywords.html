@@ -583,6 +583,18 @@ extension.  Some multilibs may be incompatible with these options.
 Implies arm_v8_2a_fp16_neon_ok and arm_v8_2a_fp16_scalar_hw.
 </p>
 </dd>
+<dt><code>arm_v8_2a_dotprod_neon_ok</code></dt>
+<dd><a name="arm_005fv8_005f2a_005fdotprod_005fneon_005fok"></a><p>ARM target supports options to generate instructions from ARMv8.2 with
+the Dot Product extension. Some multilibs may be incompatible with these
+options.
+</p>
+</dd>
+<dt><code>arm_v8_2a_dotprod_neon_hw</code></dt>
+<dd><p>ARM target supports executing instructions from ARMv8.2 with the Dot
+Product extension. Some multilibs may be incompatible with these options.
+Implies arm_v8_2a_dotprod_neon_ok.
+</p>
+</dd>
 <dt><code>arm_prefer_ldrd_strd</code></dt>
 <dd><p>ARM target prefers <code>LDRD</code> and <code>STRD</code> instructions over
 <code>LDM</code> and <code>STM</code> instructions.

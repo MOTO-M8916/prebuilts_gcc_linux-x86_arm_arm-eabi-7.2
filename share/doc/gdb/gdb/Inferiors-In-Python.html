@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -158,6 +158,14 @@ which supports the buffer protocol, i.e., a string, an array or the
 object returned from <code>gdb.read_memory</code>.  Returns a Python <code>Long</code>
 containing the address where the pattern was found, or <code>None</code> if
 the pattern could not be found.
+</p></dd></dl>
+
+<a name="index-Inferior_002ethread_005ffrom_005fthread_005fhandle"></a>
+<dl>
+<dt><a name="index-Inferior_002ethread_005ffrom_005fthread_005fhandle-1"></a>Function: <strong>Inferior.thread_from_thread_handle</strong> <em>(thread_handle)</em></dt>
+<dd><p>Return the thread object corresponding to <var>thread_handle</var>, a thread
+library specific data structure such as <code>pthread_t</code> for pthreads
+library implementations.
 </p></dd></dl>
 
 <hr>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -108,6 +108,21 @@ or alternatively see <a href="Library-List-Format-for-SVR4-Targets.html#Library-
 see <a href="Branch-Trace-Configuration-Format.html#Branch-Trace-Configuration-Format">Branch Trace Configuration Format</a>)
 </li></ul>
 
+</dd>
+<dt>MPFR</dt>
+<dd><a name="MPFR"></a><p><small>GDB</small> can use the GNU MPFR multiple-precision floating-point
+library.  This library may be included with your operating system
+distribution; if it is not, you can get the latest version from
+<a href="http://www.mpfr.org">http://www.mpfr.org</a>.  The <samp>configure</samp> script will search
+for this library in several standard locations; if it is installed
+in an unusual path, you can use the <samp>--with-libmpfr-prefix</samp>
+option to specify its location.
+</p>
+<p>GNU MPFR is used to emulate target floating-point arithmetic during
+expression evaluation when the target uses different floating-point
+formats than the host.  If GNU MPFR it is not available, <small>GDB</small>
+will fall back to using host floating-point arithmetic.
+</p>
 </dd>
 <dt>zlib</dt>
 <dd><a name="index-compressed-debug-sections"></a>

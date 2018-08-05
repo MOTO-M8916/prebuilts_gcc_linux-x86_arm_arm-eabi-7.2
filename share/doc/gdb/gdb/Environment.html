@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -113,7 +113,7 @@ print the names and values of all environment variables to be given to
 your program.  You can abbreviate <code>environment</code> as <code>env</code>.
 </p>
 <a name="index-set-environment"></a>
-</dd>
+<a name="set-environment"></a></dd>
 <dt><code>set environment <var>varname</var> <span class="roman">[</span>=<var>value</var><span class="roman">]</span></code></dt>
 <dd><p>Set environment variable <var>varname</var> to <var>value</var>.  The value
 changes for your program (and the shell <small>GDB</small> uses to launch
@@ -138,13 +138,21 @@ which also inherits the environment set with <code>set environment</code>.
 If necessary, you can avoid that by using the &lsquo;<samp>env</samp>&rsquo; program as a
 wrapper instead of using <code>set environment</code>.  See <a href="Starting.html#set-exec_002dwrapper">set exec-wrapper</a>, for an example doing just that.
 </p>
+<p>Environment variables that are set by the user are also transmitted to
+<code>gdbserver</code> to be used when starting the remote inferior.
+see <a href="General-Query-Packets.html#QEnvironmentHexEncoded">QEnvironmentHexEncoded</a>.
+</p>
 <a name="index-unset-environment"></a>
-</dd>
+<a name="unset-environment"></a></dd>
 <dt><code>unset environment <var>varname</var></code></dt>
 <dd><p>Remove variable <var>varname</var> from the environment to be passed to your
 program.  This is different from &lsquo;<samp>set env <var>varname</var> =</samp>&rsquo;;
 <code>unset environment</code> removes the variable from the environment,
 rather than assigning it an empty value.
+</p>
+<p>Environment variables that are unset by the user are also unset on
+<code>gdbserver</code> when starting the remote inferior.
+see <a href="General-Query-Packets.html#QEnvironmentUnset">QEnvironmentUnset</a>.
 </p></dd>
 </dl>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -131,9 +131,12 @@ your program.  See <a href="Environment.html#Environment">Your Program&rsquo;s E
 </p>
 </dd>
 <dt>The <em>working directory.</em></dt>
-<dd><p>Your program inherits its working directory from <small>GDB</small>.  You can set
-the <small>GDB</small> working directory with the <code>cd</code> command in <small>GDB</small>.
-See <a href="Working-Directory.html#Working-Directory">Your Program&rsquo;s Working Directory</a>.
+<dd><p>You can set your program&rsquo;s working directory with the command
+<kbd>set cwd</kbd>.  If you do not set any working directory with this
+command, your program will inherit <small>GDB</small>&rsquo;s working directory if
+native debugging, or the remote server&rsquo;s working directory if remote
+debugging.  See <a href="Working-Directory.html#Working-Directory">Your Program&rsquo;s Working
+Directory</a>.
 </p>
 </dd>
 <dt>The <em>standard input and output.</em></dt>
@@ -194,10 +197,21 @@ reused if no argument is provided during subsequent calls to
 &lsquo;<samp>start</samp>&rsquo; or &lsquo;<samp>run</samp>&rsquo;.
 </p>
 <p>It is sometimes necessary to debug the program during elaboration.  In
-these cases, using the <code>start</code> command would stop the execution of
-your program too late, as the program would have already completed the
-elaboration phase.  Under these circumstances, insert breakpoints in your
-elaboration code before running your program.
+these cases, using the <code>start</code> command would stop the execution
+of your program too late, as the program would have already completed
+the elaboration phase.  Under these circumstances, either insert
+breakpoints in your elaboration code before running your program or
+use the <code>starti</code> command.
+</p>
+<a name="index-starti"></a>
+</dd>
+<dt><code>starti</code></dt>
+<dd><a name="index-run-to-first-instruction"></a>
+<p>The &lsquo;<samp>starti</samp>&rsquo; command does the equivalent of setting a temporary
+breakpoint at the first instruction of a program&rsquo;s execution and then
+invoking the &lsquo;<samp>run</samp>&rsquo; command.  For programs containing an
+elaboration phase, the <code>starti</code> command will stop execution at
+the start of the elaboration phase.
 </p>
 <a name="set-exec_002dwrapper"></a><a name="index-set-exec_002dwrapper"></a>
 </dd>
@@ -230,11 +244,11 @@ environment:
 <small>DJGPP</small>, Cygwin, MS Windows, and QNX Neutrino.
 </p>
 <a name="index-set-startup_002dwith_002dshell"></a>
-</dd>
+<a name="set-startup_002dwith_002dshell"></a></dd>
 <dt><code>set startup-with-shell</code></dt>
 <dt><code>set startup-with-shell on</code></dt>
 <dt><code>set startup-with-shell off</code></dt>
-<dt><code>show set startup-with-shell</code></dt>
+<dt><code>show startup-with-shell</code></dt>
 <dd><p>On Unix systems, by default, if a shell is available on your target,
 <small>GDB</small>) uses it to start your program.  Arguments of the
 <code>run</code> command are passed to the shell, which does variable

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -236,6 +236,22 @@ info formats that are best suited to C<tt>++</tt> programs.
 by the debug information, <small>GDB</small> will say &lsquo;<samp>&lt;incomplete
 type&gt;</samp>&rsquo;.  See <a href="Symbols.html#Symbols">incomplete type</a>, for more about this.
 </p>
+<a name="index-no-debug-info-variables"></a>
+<p>If you try to examine or use the value of a (global) variable for
+which <small>GDB</small> has no type information, e.g., because the program
+includes no debug information, <small>GDB</small> displays an error message.
+See <a href="Symbols.html#Symbols">unknown type</a>, for more about unknown types.  If you
+cast the variable to its declared type, <small>GDB</small> gets the
+variable&rsquo;s value using the cast-to type as the variable&rsquo;s type.  For
+example, in a C program:
+</p>
+<div class="smallexample">
+<pre class="smallexample">  (gdb) p var
+  'var' has unknown type; cast it to its declared type
+  (gdb) p (float) var
+  $1 = 3.14
+</pre></div>
+
 <p>If you append <kbd>@entry</kbd> string to a function parameter name you get its
 value at the time the function got called.  If the value is not available an
 error message is printed.  Entry values are available only with some compilers.
